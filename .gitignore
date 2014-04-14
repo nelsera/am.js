@@ -26,6 +26,8 @@ Session.vim
 !.bowerrc
 !.npmignore
 !.npmrc
+!.travis.yml
+!.am
 *~
 *#*
 
