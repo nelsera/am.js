@@ -6,6 +6,7 @@
 		</g>
 	</g>
 </svg>
+![AM](http://i.imgur.com/CEEbHaw.gif)
 
 > A personal JavaScript library.
 
