@@ -30,6 +30,7 @@
 	//'*/
 	var $ = gulpLoadPlugins({ pattern: '*', lazy: true }),
 		_ = { src: './source', dist: './dist', test: './test' },
+		source = require('./.am').source,
 		inline = '// <%= pkg.name %>@v<%= pkg.version %>, <%= pkg.license %> licensed. <%= pkg.homepage %>\n',
 		extended = [
 		'/**',
