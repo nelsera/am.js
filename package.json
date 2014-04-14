@@ -1,0 +1,56 @@
+{
+  "name": "am",
+  "title": "AM",
+  "description": "AM is a personal javascript library",
+  "version": "0.0.0",
+  "main": "dist/am.js",
+  "homepage": "https://github.com/adriancmiranda/am.js",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "~3.6.0",
+    "gulp-load-plugins": "~0.3.0",
+    "gulp-bump": "~0.1.7",
+    "gulp-clean": "~0.2.4",
+    "gulp-git": "~0.3.6",
+    "gulp-header": "~1.0.2",
+    "gulp-jshint": "~1.5.3",
+    "gulp-mocha": "~0.4.1",
+    "gulp-size": "~0.3.0",
+    "gulp-uglify": "~0.2.1",
+    "gulp-plumber": "~0.6.1",
+    "gulp-jscs": "~0.4.1",
+    "gulp-rename": "~1.2.0",
+    "gulp-jsonlint": "0.0.3"
+  },
+  "author": {
+    "name": "Adrian C. Miranda",
+    "email": "adriancmiranda@gmail.com",
+    "url": "https://github.com/adriancmiranda"
+  },
+  "keywords": [
+    "am",
+    "javascript",
+    "library"
+  ],
+  "license": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/adriancmiranda/am.js/blob/master/LICENSE"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adriancmiranda/am.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adriancmiranda/am.js/issues"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "build": "npm install && gulp",
+    "start": "gulp watch",
+    "test": "gulp"
+  }
+}

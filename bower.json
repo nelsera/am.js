@@ -1,0 +1,23 @@
+{
+  "name": "AM",
+  "version": "0.0.0",
+  "main": "dist/am.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {},
+  "keywords": [
+    "am",
+    "javascript",
+    "library"
+  ],
+  "ignore": [
+    "bower_components",
+    "node_modules",
+    "package.json",
+    "gulpfile.js",
+    "tests",
+    "test",
+    "**/.*"
+  ]
+}
