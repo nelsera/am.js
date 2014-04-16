@@ -10,7 +10,7 @@
 
 > A personal JavaScript library.
 
-[![build status][travis_build_status_image]][travis_build_status_url] [![dependencies status][david_dependencies_status_image]][david_dependencies_status_url] [![devDependency status][david_devdependencies_status_image]][david_devdependencies_status_url]
+[![build status][travis_build_status_image]][travis_build_status_url] [![dependencies status][david_dependencies_status_image]][david_dependencies_status_url] [![devDependency status][david_devdependencies_status_image]][david_devdependencies_status_url] [![Bitdeli Badge][bitdeli_image]][bitdeli_url]
 
 <!-- travis -->
 [travis_build_status_image]: https://travis-ci.org/adriancmiranda/am.js.png?branch=master
@@ -23,6 +23,10 @@
 <!-- david devDependencies -->
 [david_devdependencies_status_image]: https://david-dm.org/adriancmiranda/am.js/dev-status.png?theme=shields.io
 [david_devdependencies_status_url]: https://david-dm.org/adriancmiranda/am.js#info=devDependencies "devDependencies status"
+
+<!-- bitdeli -->
+[bitdeli_image]: https://d2weczhvl823v0.cloudfront.net/adriancmiranda/am.js/trend.png
+[bitdeli_url]: https://bitdeli.com/free "Bitdeli Badge"
 
 ## How to build your own __AM__
 
