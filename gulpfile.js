@@ -29,16 +29,16 @@
 	//|
 	//'*/
 	var $ = gulpLoadPlugins({ pattern: '*', lazy: true }),
-		_ = { src: './source', dist: './dist', test: './test' },
+		_ = { dist: './dist', test: './test' },
 		source = require('./.am').source,
-		inline = '// <%= pkg.name %>@v<%= pkg.version %>, <%= pkg.license %> licensed. <%= pkg.homepage %>\n',
+		inline = '// <%= pkg.name %>@v<%= pkg.version %>, <%= pkg.license[0].type %> licensed. <%= pkg.homepage %>\n',
 		extended = [
 		'/**',
 		' * <%= pkg.name %> - <%= pkg.description %>',
 		' * @version v<%= pkg.version %>',
 		' * @link <%= pkg.homepage %>',
-		' * @license <%= pkg.license %>',
-		' */'
+		' * @license <%= pkg.license[0].type %>',
+		' */\n'
 	].join('\n');
 
 	//|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -59,7 +59,7 @@
 	});
 
 	gulp.task('jshint', function () {
-		var stream = gulp.src(_.src + '/*.js')
+		var stream = gulp.src(source['core'])
 		.pipe($.plumber())
 		.pipe($.jshint('.jshintrc'))
 		.pipe($.jshint.reporter('default'))
@@ -77,8 +77,9 @@
 	//|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//| ✓ compress
 	//'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-	gulp.task('build', function () {
-		var stream = gulp.src(_.src + '/am.js')
+	gulp.task('build', ['validate'], function () {
+		var stream = gulp.src(wrap(source['core'], 'am'))
+		.pipe($.concat('am.js'))
 		.pipe($.header(extended, { pkg: pkg } ))
 		.pipe(gulp.dest(_.dist))
 		.pipe($.rename('am.min.js'))
@@ -138,5 +139,14 @@
 	gulp.task('validate', ['jsonlint', 'jshint', 'mocha']);
 	gulp.task('release', ['npm']);
 	gulp.task('ci', ['build']);
+
+	//|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//| ✓ utils
+	//'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+	function wrap(src, name) {
+		src.unshift('source/' + name + '.prefix');
+		src.push('source/' + name + '.suffix');
+		return src;
+	}
 
 }(require('gulp'), require('gulp-load-plugins'), require('./package.json')));

@@ -20,7 +20,8 @@
     "gulp-plumber": "~0.6.1",
     "gulp-jscs": "~0.4.1",
     "gulp-rename": "~1.2.0",
-    "gulp-jsonlint": "0.0.3"
+    "gulp-jsonlint": "0.0.3",
+    "gulp-concat": "~2.2.0"
   },
   "author": {
     "name": "Adrian C. Miranda",

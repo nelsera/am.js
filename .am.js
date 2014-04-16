@@ -1,8 +1,11 @@
 am = {
 	core: [
+		'source/helpers/polyfills.js',
+		'source/helpers/utils.js',
+		'source/am.js'
 	],
-	modules: [
-	]
+	modules: {
+	}
 };
 if (exports) {
 	exports.source = am;
