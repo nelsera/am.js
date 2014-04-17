@@ -21,7 +21,5 @@
     //| @see http://code.google.com/p/jsdoc-toolkit/wiki/TagReference
     //'
     'use strict';
-    console.log('aeaeae');
-    var a = 1;
-    window.console.log('a:', a);
+    
 }(this, this.document, this.AM = this.AM || {}));
