@@ -5,24 +5,23 @@
  * @license MIT
  */
 (function (window, document, AM, undefined) {
-//| .-------------------------------------------------------------------.
-//| | NAMING CONVENTIONS:                                               |
-//| |-------------------------------------------------------------------|
-//| | Singleton-literals and prototype objects      | PascalCase        |
-//| |-------------------------------------------------------------------|
-//| | Functions and public variables                | camelCase         |
-//| |-------------------------------------------------------------------|
-//| | Global variables and constants                | UPPERCASE         |
-//| |-------------------------------------------------------------------|
-//| | Private variables                             | _underscorePrefix |
-//| '-------------------------------------------------------------------'
-//|
-//| Comment syntax for the entire project follows JSDoc:
-//| @see http://code.google.com/p/jsdoc-toolkit/wiki/TagReference
-//'
-'use strict';
-
-
-
-
+    //| .-------------------------------------------------------------------.
+    //| | NAMING CONVENTIONS:                                               |
+    //| |-------------------------------------------------------------------|
+    //| | Singleton-literals and prototype objects      | PascalCase        |
+    //| |-------------------------------------------------------------------|
+    //| | Functions and public variables                | camelCase         |
+    //| |-------------------------------------------------------------------|
+    //| | Global variables and constants                | UPPERCASE         |
+    //| |-------------------------------------------------------------------|
+    //| | Private variables                             | _underscorePrefix |
+    //| '-------------------------------------------------------------------'
+    //|
+    //| Comment syntax for the entire project follows JSDoc:
+    //| @see http://code.google.com/p/jsdoc-toolkit/wiki/TagReference
+    //'
+    'use strict';
+    console.log('aeaeae');
+    var a = 1;
+    window.console.log('a:', a);
 }(this, this.document, this.AM = this.AM || {}));

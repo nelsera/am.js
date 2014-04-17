@@ -80,6 +80,7 @@
 	gulp.task('build', ['validate'], function () {
 		var stream = gulp.src(wrap(source['core'], 'am'))
 		.pipe($.concat('am.js'))
+		.pipe($.removeUseStrict())
 		.pipe($.header(extended, { pkg: pkg } ))
 		.pipe(gulp.dest(_.dist))
 		.pipe($.rename('am.min.js'))
