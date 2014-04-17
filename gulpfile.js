@@ -34,7 +34,9 @@
 		inline = '// <%= pkg.name %>@v<%= pkg.version %>, <%= pkg.license[0].type %> licensed. <%= pkg.homepage %>\n',
 		extended = [
 		'/**',
-		' * <%= pkg.name %> - <%= pkg.description %>',
+		' * <%= pkg.name %>',
+		' * @author <%= pkg.author.name %>',
+		' * @description <%= pkg.description %>',
 		' * @version v<%= pkg.version %>',
 		' * @link <%= pkg.homepage %>',
 		' * @license <%= pkg.license[0].type %>',

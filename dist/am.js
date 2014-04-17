@@ -1,5 +1,7 @@
 /**
- * am - AM is a personal javascript library
+ * am.js
+ * @author Adrian C. Miranda
+ * @description AM is a personal javascript library
  * @version v0.0.0
  * @link https://github.com/adriancmiranda/am.js
  * @license MIT
@@ -21,7 +23,4 @@
     //| @see http://code.google.com/p/jsdoc-toolkit/wiki/TagReference
     //'
     'use strict';
-    console.log('aeaeae');
-    var a = 1;
-    window.console.log('a:', a);
 }(this, this.document, this.AM = this.AM || {}));
