@@ -56,13 +56,27 @@
 		])
 		.pipe($.plumber())
 		.pipe($.jsonlint())
-		.pipe($.jsonlint.reporter());
+		.pipe($.jsonlint.reporter())
+		.pipe($.notify({
+			message: '<%= options.date %> ✓ jsonlint: <%= file.relative %>',
+			templateOptions: {
+				date: new Date()
+			}
+		}));
 		return stream;
 	});
 
 	gulp.task('jshint', function () {
-		var stream = gulp.src(source['core'])
+		var stream = gulp.src(wrap(source['core'], 'am'))
 		.pipe($.plumber())
+		.pipe($.notify({
+			message: '<%= options.date %> ✓ jshint: <%= file.relative %>',
+			templateOptions: {
+				date: new Date()
+			}
+		}))
+		.pipe($.concat('am.js'))
+		.pipe($.removeUseStrict())
 		.pipe($.jshint('.jshintrc'))
 		.pipe($.jshint.reporter('default'))
 		.pipe($.jscs());
@@ -79,18 +93,38 @@
 	//|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//| ✓ compress
 	//'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-	gulp.task('build', ['validate'], function () {
+	gulp.task('src', ['jshint'], function () {
 		var stream = gulp.src(wrap(source['core'], 'am'))
+		.pipe($.plumber())
+		.pipe($.notify({
+			message: '<%= options.date %> ✓ src: <%= file.relative %>',
+			templateOptions: {
+				date: new Date()
+			}
+		}))
 		.pipe($.concat('am.js'))
 		.pipe($.removeUseStrict())
-		.pipe($.header(extended, { pkg: pkg } ))
-		.pipe(gulp.dest(_.dist))
-		.pipe($.rename('am.min.js'))
-		.pipe($.uglify())
-		.pipe($.header(inline, { pkg: pkg } ))
+		.pipe($.header(extended, { pkg: pkg }))
 		.pipe($.size())
 		.pipe(gulp.dest(_.dist));
 		return stream;
+	});
+
+	gulp.task('min', ['src'], function () {
+		var min = gulp.src(_.dist + '/am.js')
+		.pipe($.plumber())
+		.pipe($.notify({
+			message: '<%= options.date %> ✓ min: <%= file.relative %>',
+			templateOptions: {
+				date: new Date()
+			}
+		}))
+		.pipe($.rename('am.min.js'))
+		.pipe($.uglify())
+		.pipe($.header(inline, { pkg: pkg }))
+		.pipe($.size())
+		.pipe(gulp.dest(_.dist));
+		return min;
 	});
 
 	//|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -104,7 +138,7 @@
 		return stream;
 	});
 
-	gulp.task('tag', ['bump', 'build'], function () {
+	gulp.task('tag', ['bump', 'min'], function () {
 		var version = 'v' + pkg.version;
 		var message = 'Release ' + version;
 		var stream = gulp.src('./')
@@ -133,7 +167,7 @@
 	});
 
 	gulp.task('default', function() {
-		gulp.start('build');
+		gulp.start('min');
 	});
 
 	//|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -141,7 +175,7 @@
 	//'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 	gulp.task('validate', ['jsonlint', 'jshint', 'mocha']);
 	gulp.task('release', ['npm']);
-	gulp.task('ci', ['build']);
+	gulp.task('ci', ['min']);
 
 	//|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//| ✓ utils
