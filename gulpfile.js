@@ -30,7 +30,7 @@
 	//'*/
 	var $ = gulpLoadPlugins({ pattern: '*', lazy: true }),
 		_ = { dist: './dist', test: './test' },
-		source = require('./.am').source,
+		source = require('./.amrc').source,
 		inline = '// <%= pkg.name %>@v<%= pkg.version %>, <%= pkg.license[0].type %> licensed. <%= pkg.homepage %>\n',
 		extended = [
 		'/**',
@@ -67,7 +67,8 @@
 	});
 
 	gulp.task('jshint', function () {
-		var stream = gulp.src(wrap(source['core'], 'am'))
+		var core = source['core'];
+		var stream = gulp.src(wrap(core.files, core.name))
 		.pipe($.plumber())
 		.pipe($.notify({
 			message: '<%= options.date %> ✓ jshint: <%= file.relative %>',
@@ -93,8 +94,9 @@
 	//|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//| ✓ compress
 	//'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-	gulp.task('src', ['jshint'], function () {
-		var stream = gulp.src(wrap(source['core'], 'am'))
+	gulp.task('src', ['validate'], function () {
+		var core = source['core'];
+		var stream = gulp.src(wrap(core.files, core.name))
 		.pipe($.plumber())
 		.pipe($.notify({
 			message: '<%= options.date %> ✓ src: <%= file.relative %>',
@@ -102,7 +104,7 @@
 				date: new Date()
 			}
 		}))
-		.pipe($.concat('am.js'))
+		.pipe($.concat(core.name + '.js'))
 		.pipe($.removeUseStrict())
 		.pipe($.header(extended, { pkg: pkg }))
 		.pipe($.size())
@@ -111,7 +113,8 @@
 	});
 
 	gulp.task('min', ['src'], function () {
-		var min = gulp.src(_.dist + '/am.js')
+		var core = source['core'];
+		var min = gulp.src(_.dist + '/' + core.name + '.js')
 		.pipe($.plumber())
 		.pipe($.notify({
 			message: '<%= options.date %> ✓ min: <%= file.relative %>',
@@ -119,7 +122,7 @@
 				date: new Date()
 			}
 		}))
-		.pipe($.rename('am.min.js'))
+		.pipe($.rename(core.name + '.min.js'))
 		.pipe($.uglify())
 		.pipe($.header(inline, { pkg: pkg }))
 		.pipe($.size())

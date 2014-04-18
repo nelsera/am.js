@@ -27,7 +27,7 @@ Session.vim
 !.npmignore
 !.npmrc
 !.travis.yml
-!.am.js
+!.amrc.js
 *~
 *#*
 

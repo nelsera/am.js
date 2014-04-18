@@ -1,4 +1,7 @@
 {
 	"directory": "bower_components",
-	"json": "bower.json"
+	"json": "bower.json",
+	"searchpath": [
+		"https://github.com/adriancmiranda/am.js/tree/master/dist"
+	]
 }
