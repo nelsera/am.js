@@ -16,7 +16,7 @@
     "node_modules",
     "package.json",
     "gulpfile.js",
-    "tests",
+    "bower.json",
     "test",
     "**/.*"
   ]
