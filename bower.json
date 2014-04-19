@@ -17,6 +17,7 @@
     "package.json",
     "gulpfile.js",
     "bower.json",
+    "source",
     "tests",
     "test",
     "**/.*"
