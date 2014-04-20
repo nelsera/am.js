@@ -14,4 +14,3 @@
 //| Comment syntax for the entire project follows JSDoc:
 //| @see http://code.google.com/p/jsdoc-toolkit/wiki/TagReference
 //'
-'use strict';

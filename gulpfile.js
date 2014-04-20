@@ -28,7 +28,7 @@
 	//| - 'test/spec/**/*.js'
 	//|
 	//'*/
-	var $ = gulpLoadPlugins({ pattern: '*', lazy: true }),
+	var $ = gulpLoadPlugins({ pattern: '*', lazy: false }),
 		_ = { dist: './dist', test: './test' },
 		source = require('./.amrc').source,
 		inline = '// <%= pkg.name %>@v<%= pkg.version %>, <%= pkg.license[0].type %> licensed. <%= pkg.homepage %>\n',
@@ -173,7 +173,7 @@
 	//|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//| ✓ shortcuts
 	//'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-	gulp.task('validate', ['jsonlint', 'jshint', 'mocha']);
+	gulp.task('validate', ['jsonlint', 'jshint'/*, 'mocha'*/]);
 	gulp.task('release', ['npm']);
 	gulp.task('ci', ['min']);
 

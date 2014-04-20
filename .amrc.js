@@ -7,11 +7,8 @@ if (exports) {
 			'name':'am',
 			'files':[
 				'source/helpers/Polyfills.js',
-				'source/AM.js',
 				'source/helpers/Utils.js',
-				'source/display/DisplayObject.js',
-				'source/display/Sprite.js',
-				'source/display/MovieClip.js'
+				'source/AM.js'
 			]
 		}
 	};
