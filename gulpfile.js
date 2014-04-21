@@ -28,17 +28,19 @@
 	//| - 'test/spec/**/*.js'
 	//|
 	//'*/
-	var $ = gulpLoadPlugins({ pattern: '*', lazy: true }),
-		_ = { src: './source', dist: './dist', test: './test' },
-		source = require('./.am').source,
-		inline = '// <%= pkg.name %>@v<%= pkg.version %>, <%= pkg.license %> licensed. <%= pkg.homepage %>\n',
+	var $ = gulpLoadPlugins({ pattern: '*', lazy: false }),
+		_ = { dist: './dist', test: './test' },
+		source = require('./.amrc').source,
+		inline = '// <%= pkg.name %>@v<%= pkg.version %>, <%= pkg.license[0].type %> licensed. <%= pkg.homepage %>\n',
 		extended = [
 		'/**',
-		' * <%= pkg.name %> - <%= pkg.description %>',
+		' * <%= pkg.name %>',
+		' * @author <%= pkg.author.name %>',
+		' * @description <%= pkg.description %>',
 		' * @version v<%= pkg.version %>',
 		' * @link <%= pkg.homepage %>',
-		' * @license <%= pkg.license %>',
-		' */'
+		' * @license <%= pkg.license[0].type %>',
+		' */\n'
 	].join('\n');
 
 	//|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -54,13 +56,27 @@
 		])
 		.pipe($.plumber())
 		.pipe($.jsonlint())
-		.pipe($.jsonlint.reporter());
+		.pipe($.jsonlint.reporter())
+		.pipe($.notify({
+			message: '<%= options.date %> ✓ jsonlint: <%= file.relative %>',
+			templateOptions: {
+				date: new Date()
+			}
+		}));
 		return stream;
 	});
 
 	gulp.task('jshint', function () {
-		var stream = gulp.src(_.src + '/*.js')
+		var stream = gulp.src(wrap(source['am'].files, source['am'].name))
 		.pipe($.plumber())
+		.pipe($.notify({
+			message: '<%= options.date %> ✓ jshint: <%= file.relative %>',
+			templateOptions: {
+				date: new Date()
+			}
+		}))
+		.pipe($.concat(source['am'].name + '.js'))
+		.pipe($.removeUseStrict())
 		.pipe($.jshint('.jshintrc'))
 		.pipe($.jshint.reporter('default'))
 		.pipe($.jscs());
@@ -77,16 +93,38 @@
 	//|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//| ✓ compress
 	//'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-	gulp.task('build', function () {
-		var stream = gulp.src(_.src + '/am.js')
-		.pipe($.header(extended, { pkg: pkg } ))
-		.pipe(gulp.dest(_.dist))
-		.pipe($.rename('am.min.js'))
-		.pipe($.uglify())
-		.pipe($.header(inline, { pkg: pkg } ))
+	gulp.task('src', ['validate'], function () {
+		var stream = gulp.src(wrap(source['am'].files, source['am'].name))
+		.pipe($.plumber())
+		.pipe($.notify({
+			message: '<%= options.date %> ✓ src: <%= file.relative %>',
+			templateOptions: {
+				date: new Date()
+			}
+		}))
+		.pipe($.concat(source['am'].name + '.js'))
+		.pipe($.removeUseStrict())
+		.pipe($.header(extended, { pkg: pkg }))
 		.pipe($.size())
 		.pipe(gulp.dest(_.dist));
 		return stream;
+	});
+
+	gulp.task('min', ['src'], function () {
+		var min = gulp.src(_.dist + '/' + source['am'].name + '.js')
+		.pipe($.plumber())
+		.pipe($.notify({
+			message: '<%= options.date %> ✓ min: <%= file.relative %>',
+			templateOptions: {
+				date: new Date()
+			}
+		}))
+		.pipe($.rename(source['am'].name + '.min.js'))
+		.pipe($.uglify())
+		.pipe($.header(inline, { pkg: pkg }))
+		.pipe($.size())
+		.pipe(gulp.dest(_.dist));
+		return min;
 	});
 
 	//|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -100,7 +138,7 @@
 		return stream;
 	});
 
-	gulp.task('tag', ['bump', 'build'], function () {
+	gulp.task('tag', ['bump', 'min'], function () {
 		var version = 'v' + pkg.version;
 		var message = 'Release ' + version;
 		var stream = gulp.src('./')
@@ -129,14 +167,23 @@
 	});
 
 	gulp.task('default', function() {
-		gulp.start('build');
+		gulp.start('min');
 	});
 
 	//|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//| ✓ shortcuts
 	//'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-	gulp.task('validate', ['jsonlint', 'jshint', 'mocha']);
+	gulp.task('validate', ['jsonlint', 'jshint'/*, 'mocha'*/]);
 	gulp.task('release', ['npm']);
-	gulp.task('ci', ['build']);
+	gulp.task('ci', ['min']);
+
+	//|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//| ✓ utils
+	//'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+	function wrap(src, name) {
+		src.unshift('source/' + name + '.prefix');
+		src.push('source/' + name + '.suffix');
+		return src;
+	}
 
 }(require('gulp'), require('gulp-load-plugins'), require('./package.json')));

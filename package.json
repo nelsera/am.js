@@ -1,5 +1,5 @@
 {
-  "name": "am",
+  "name": "am.js",
   "title": "AM",
   "description": "AM is a personal javascript library",
   "version": "0.0.0",
@@ -20,7 +20,10 @@
     "gulp-plumber": "~0.6.1",
     "gulp-jscs": "~0.4.1",
     "gulp-rename": "~1.2.0",
-    "gulp-jsonlint": "0.0.3"
+    "gulp-jsonlint": "0.0.3",
+    "gulp-concat": "~2.2.0",
+    "gulp-remove-use-strict": "0.0.2",
+    "gulp-notify": "~1.2.5"
   },
   "author": {
     "name": "Adrian C. Miranda",

@@ -1,11 +1,22 @@
-am = {
-	core: [
-	],
-	modules: [
-	]
-};
 if (exports) {
-	exports.source = am;
+	/**
+	 * Source file collection
+	 */
+	var am = exports.source = {
+		am: {
+			'name':'am',
+			'files':[
+				'source/helpers/Polyfills.js',
+				'source/helpers/Utils.js',
+				'source/AM.js'
+			]
+		}
+	};
+
+	/**
+	 * @usage am.mergeFilesFor('karma');
+	 * @return Array
+	 */
 	exports.mergeFilesFor = function() {
 		var files = [];
 		Array.prototype.slice.call(arguments, 0).forEach(function(filegroup) {

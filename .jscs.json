@@ -7,7 +7,6 @@
 	"disallowLeftStickedOperators": ["?", "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
 	"disallowRightStickedOperators": ["?", "+", "/", "*", ":", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
 	"requireMultipleVarDecl": true,
-	"requireLineFeedAtFileEnd": true,
 	"requireLeftStickedOperators": [","],
 	"requireRightStickedOperators": ["!"],
 	"requireCurlyBraces": ["if", "else", "for", "while", "do", "try", "catch"],
