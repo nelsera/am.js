@@ -153,7 +153,6 @@
 		var process = require('child_process')
 		.spawn('npm', ['publish'], { stdio: 'inherit' })
 		.on('close', done);
-		return process;
 	});
 
 	//|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
