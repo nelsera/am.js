@@ -1,32 +1,31 @@
 'use strict';
 
-function isBrowser(name) {
-	var browser = {},
-	ua = navigator.userAgent.toLowerCase(),
-	info = /(chrome)[ \/]([\w.]+)/.exec(ua)
-	|| ua.indexOf('compatible') < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec(ua)
-	|| /(opera)(?:.*version|)[ \/]([\w.]+)/.exec(ua)
-	|| /(webkit)[ \/]([\w.]+)/.exec(ua)
-	|| /(msie) ([\w.]+)/.exec(ua)
-	|| [];
-	if (info[1]) {
-		browser[info[1]] = true;
-		browser.version = info[2] || '0';
+function merge(defaults, options) {
+	var option, output = {};
+	options = typeOf(options) === 'object' ? options : {};
+	for (option in defaults) {
+		output[option] = (options.hasOwnProperty(option) ? options : defaults)[option];
 	}
-	// Chrome is Webkit, but
-	// Webkit is also Safari.
-	// Mozilla is Firefox.
-	// MSIE is IE
-	if (browser.chrome) {
-		browser.webkit = true;
-	} else if (browser.webkit) {
-		browser.safari = true;
-	} else if (browser.mozilla) {
-		browser.firefox = true;
-	} else if (browser.msie) {
-		browser.ie = true;
+	return output;
+}
+
+function gridLayout(length, columns, width, height, marginX, marginY, vertical) {
+	var id, row, column, offsetX, offsetY, positions = [];
+	for (id = 0; id < length; id++) {
+		column = (vertical ? ~~(id / columns) : (id % columns));
+		row = (vertical ? (id % columns) : ~~(id / columns));
+		offsetX = (Math.round(width + marginX) * column);
+		offsetY = (Math.round(height + marginY) * row);
+		positions.push({
+			column: column,
+			row: row,
+			x: (0 - offsetX),
+			y: (0 - offsetY),
+			frame: id,
+			label: ''
+		});
 	}
-	return name ? browser[name] : browser;
+	return positions;
 }
 
 function getDefinitionName(value, strict) {
@@ -40,10 +39,7 @@ function getDefinitionName(value, strict) {
 		return 'Number';
 	}
 	if (value && value.constructor) {
-		var name = (value.constructor.toString() || Object.prototype.toString.apply(value))
-		.replace(/^.*function([^\s]*|[^\(]*)\([^\x00]+$/, '$1')
-		.replace(/^(\[object\s)|]$/g, '')
-		.replace(/\s+/, '') || 'Object';
+		var name = (value.constructor.toString() || Object.prototype.toString.apply(value)).replace(/^.*function([^\s]*|[^\(]*)\([^\x00]+$/, '$1').replace(/^(\[object\s)|]$/g, '').replace(/\s+/, '') || 'Object';
 		if (strict !== true) {
 			if (!/^(Boolean|RegExp|Number|String|Array|Date)$/.test(name)) {
 				return 'Object';
@@ -75,6 +71,15 @@ function typeOf(value, strict) {
 	return value ? type : value;
 }
 
+function num(value, ceiling) {
+	value = window.parseFloat(value);
+	value = window.isNaN(value) || !window.isFinite(value) ? 0 : value;
+	if (ceiling === true) {
+		value = window.parseInt(value * 10000, 10) / 10000;
+	}
+	return value;
+}
+
 function bool(value) {
 	if (typeOf(value) === 'string') {
 		return /^(true|(^[1-9][0-9]*$)$|yes|y|sim|s|on)$/gi.test(value);
@@ -83,18 +88,18 @@ function bool(value) {
 }
 
 function bound(value, min, max) {
-	num(value);
-	num(min);
-	num(max);
-	return((value > max) ? max : (value < min ? min : value));
+	value = num(value);
+	min = num(min);
+	max = num(max);
+	return value > max ? max : value < min ? min : value;
 }
 
 function mod(value, min, max) {
-	num(value);
-	num(min);
-	num(max);
+	value = num(value);
+	min = num(min);
+	max = num(max);
 	value = value % max;
-	return((value < min) ? (value + max) : value);
+	return num(value < min ? value + max : value);
 }
 
 function uint(value) {
@@ -103,14 +108,5 @@ function uint(value) {
 }
 
 function int(value) {
-	return(0 | window.parseInt(value, 10));
-}
-
-function num(value, ceiling) {
-	value = window.parseFloat(value);
-	value = (window.isNaN(value) || !window.isFinite(value)) ? 0 : value;
-	if (ceiling === true) {
-		value = window.parseInt(value * 10000, 10) / 10000;
-	}
-	return value;
+	return 0 | window.parseInt(value, 10);
 }
