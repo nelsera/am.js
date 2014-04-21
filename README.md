@@ -35,7 +35,7 @@ The built version of __AM__ will be put in the `dist/` subdirectory, along with 
 ## Usage
 
 ```javascript
-var sprite = new AM.Sprite($('.sprite')[0], {
+var sprite = new AM.Sprite(document.querySelector('.sprite'), {
     vertical: true,  // Optional: Reading Order.
     currentFrame: 1, // Optional: Number of first frame in sprite.
     totalFrames: 35, // Required: Number of frames in sprite.
