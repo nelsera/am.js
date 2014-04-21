@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Am.js by adriancmiranda</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Am.js</h1>
+        <p>A personal javascript library</p>
+        <p class="view"><a href="https://github.com/adriancmiranda/am.js">View the Project on GitHub <small>adriancmiranda/am.js</small></a></p>
+        <ul>
+          <li><a href="https://github.com/adriancmiranda/am.js/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/adriancmiranda/am.js/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/adriancmiranda/am.js">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p><img src="http://i.imgur.com/CEEbHaw.gif" alt="AM"></p>
+
+<blockquote>
+<p>A personal JavaScript library. </p>
+</blockquote>
+
+<p><a href="https://travis-ci.org/adriancmiranda/am.js" title="build status"><img src="https://travis-ci.org/adriancmiranda/am.js.png?branch=master" alt="build status"></a> <a href="https://david-dm.org/adriancmiranda/am.js" title="dependencies status"><img src="https://david-dm.org/adriancmiranda/am.js.png?theme=shields.io" alt="dependencies status"></a> <a href="https://david-dm.org/adriancmiranda/am.js#info=devDependencies" title="devDependencies status"><img src="https://david-dm.org/adriancmiranda/am.js/dev-status.png?theme=shields.io" alt="devDependency status"></a></p>
+
+
+
+
+
+
+
+<h2>
+<a name="how-to-build-your-own-am" class="anchor" href="#how-to-build-your-own-am"><span class="octicon octicon-link"></span></a>How to build your own <strong>AM</strong>
+</h2>
+
+<p>Clone a copy of the main <strong>AM</strong> git repo by running:</p>
+
+<div class="highlight highlight-bash"><pre>git clone git@github.com:adriancmiranda/am.js.git <span class="o">&amp;&amp;</span> <span class="nb">cd </span>am.js
+</pre></div>
+
+<p>Run the build script:</p>
+
+<div class="highlight highlight-bash"><pre>npm run build
+</pre></div>
+
+<p>The built version of <strong>AM</strong> will be put in the <code>dist/</code> subdirectory, along with the minified copy and associated map file.</p>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<div class="highlight highlight-html"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"sprite"</span><span class="nt">&gt;&lt;/div&gt;</span>
+</pre></div>
+
+<div class="highlight highlight-css"><pre><span class="nc">.sprite</span> <span class="p">{</span>
+    <span class="k">background</span><span class="o">:</span> <span class="sx">url("../images/sprite.png")</span> <span class="k">no-repeat</span> <span class="m">0</span> <span class="m">0</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">146px</span><span class="p">;</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">54px</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">sprite</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AM</span><span class="p">.</span><span class="nx">Sprite</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'.sprite'</span><span class="p">),</span> <span class="p">{</span>
+    <span class="nx">vertical</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>  <span class="c1">// Optional: Reading Order.</span>
+    <span class="nx">currentFrame</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="c1">// Optional: Number of first frame in sprite.</span>
+    <span class="nx">totalFrames</span><span class="o">:</span> <span class="mi">35</span><span class="p">,</span> <span class="c1">// Required: Number of frames in sprite.</span>
+    <span class="nx">tileW</span><span class="o">:</span> <span class="mi">146</span><span class="p">,</span>      <span class="c1">// Optional: Set the frame width manually.</span>
+    <span class="nx">tileH</span><span class="o">:</span> <span class="mi">54</span><span class="p">,</span>       <span class="c1">// Optional: Set the frame height manually.</span>
+    <span class="nx">columns</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span>      <span class="c1">// Required: Number of columns in sprite.</span>
+    <span class="nx">rows</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span>         <span class="c1">// Required: Number of rows in sprite.</span>
+    <span class="nx">fps</span><span class="o">:</span> <span class="mi">24</span>          <span class="c1">// Optional: Frames per second.</span>
+<span class="p">});</span>
+<span class="nx">sprite</span><span class="p">.</span><span class="nx">play</span><span class="p">();</span>
+</pre></div>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p><a href="https://github.com/adriancmiranda/generator-gulp-requirejs/blob/master/LICENSE" title="MIT LICENSE">MIT</a></p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/adriancmiranda">adriancmiranda</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
