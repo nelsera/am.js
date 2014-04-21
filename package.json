@@ -2,7 +2,7 @@
   "name": "am.js",
   "title": "AM",
   "description": "AM is a personal javascript library",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "dist/am.js",
   "homepage": "https://github.com/adriancmiranda/am.js",
   "dependencies": {},
