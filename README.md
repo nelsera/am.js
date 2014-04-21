@@ -32,33 +32,5 @@ npm run build
 
 The built version of __AM__ will be put in the `dist/` subdirectory, along with the minified copy and associated map file.
 
-## Usage
-
-```html
-<div class="sprite"></div>
-```
-
-```css
-.sprite {
-    background: url("../images/sprite.png") no-repeat 0 0;
-    width: 146px;
-    height: 54px;
-}
-```
-
-```javascript
-var sprite = new AM.Sprite(document.querySelector('.sprite'), {
-    vertical: true,  // Optional: Reading Order.
-    currentFrame: 1, // Optional: Number of first frame in sprite.
-    totalFrames: 35, // Required: Number of frames in sprite.
-    tileW: 146,      // Optional: Set the frame width manually.
-    tileH: 54,       // Optional: Set the frame height manually.
-    columns: 6,      // Required: Number of columns in sprite.
-    rows: 6,         // Required: Number of rows in sprite.
-    fps: 24          // Optional: Frames per second.
-});
-sprite.play();
-```
-
 ## License
 [MIT](https://github.com/adriancmiranda/generator-gulp-requirejs/blob/master/LICENSE "MIT LICENSE")
