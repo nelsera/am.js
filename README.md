@@ -34,6 +34,18 @@ The built version of __AM__ will be put in the `dist/` subdirectory, along with 
 
 ## Usage
 
+```html
+<div class="sprite"></div>
+```
+
+```css
+.sprite {
+    background: url("../images/sprite.png") no-repeat 0 0;
+    width: 146px;
+    height: 54px;
+}
+```
+
 ```javascript
 var sprite = new AM.Sprite(document.querySelector('.sprite'), {
     vertical: true,  // Optional: Reading Order.
