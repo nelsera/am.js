@@ -28,6 +28,21 @@ function gridLayout(length, columns, width, height, marginX, marginY, vertical) 
 	return positions;
 }
 
+function getBackgroundPositionFrom(element) {
+	var position = (
+		getStyle(element, 'backgroundPosition') ||
+		getStyle(element, 'backgroundPositionX') + ' ' + getStyle(element, 'backgroundPositionY')
+	).replace(/left|top/gi, 0).split(' ');
+    return { x: int(position[0]), y: int(position[1]) };
+}
+
+function getStyle(element, property) {
+	if (window.getComputedStyle) {
+		return window.getComputedStyle(element, null)[property];
+	}
+	return element.currentStyle[property];
+}
+
 function getDefinitionName(value, strict) {
 	if (value === false) {
 		return 'Boolean';

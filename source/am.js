@@ -11,6 +11,7 @@ AM.Sprite = function (element, options) {
 
     var $this = this,
     	$static = $this.constructor.static,
+    	$bgPoint = getBackgroundPositionFrom(element),
     	$factor = 1,
     	$requestID = null,
     	$vars = {};
@@ -77,6 +78,7 @@ AM.Sprite = function (element, options) {
     $this.pause = function () {
         clearAnimation($requestID);
         $requestID = null;
+        $this.running = false;
     };
 
     $this.togglePause = function () {
@@ -128,16 +130,18 @@ AM.Sprite = function (element, options) {
     };
 
     $this.loopBetween = function (from, to, yoyo, vars) {
-        $this.gotoAndStop(from);
-        $this.running = true;
-        $this.looping = true;
-        $this.yoyo = bool(yoyo);
-        $this.targetNextFrame = uint(from);
-        if (to === 0) {
-            to = $this.totalFrames;
-        }
-        $this.play(to, vars);
-    };
+		from = bound(from, 1, $this.totalFrames);
+		to = bound(to, 0, $this.totalFrames);
+		$this.gotoAndStop(from);
+		$this.running = true;
+		$this.looping = true;
+		$this.yoyo = bool(yoyo);
+		$this.targetNextFrame = from;
+		if (to === 0) {
+			to = $this.totalFrames;
+		}
+		$this.play(to, vars);
+	};
 
     $this.cancelLooping = function () {
         $this.running = false;
@@ -188,8 +192,8 @@ AM.Sprite = function (element, options) {
         $this.currentFrame = mod(frame, 1, $this.totalFrames);
         $this.row = $this.timeline[$this.currentFrame - 1].row;
         $this.column = $this.timeline[$this.currentFrame - 1].column;
-        $this.offsetX = $this.timeline[$this.currentFrame - 1].x;
-        $this.offsetY = $this.timeline[$this.currentFrame - 1].y;
+        $this.offsetX = $this.timeline[$this.currentFrame - 1].x + $bgPoint.x;
+        $this.offsetY = $this.timeline[$this.currentFrame - 1].y + $bgPoint.y;
         $this.element.style.backgroundPosition = $this.offsetX + 'px ' + $this.offsetY + 'px';
     }
 

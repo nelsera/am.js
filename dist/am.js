@@ -2,7 +2,7 @@
  * am.js
  * @author Adrian C. Miranda
  * @description AM is a personal javascript library
- * @version v0.0.0
+ * @version v0.0.1
  * @link https://github.com/adriancmiranda/am.js
  * @license MIT
  */
@@ -77,6 +77,19 @@
             });
         }
         return positions;
+    }
+    function getBackgroundPositionFrom(element) {
+        var position = (getStyle(element, 'backgroundPosition') || getStyle(element, 'backgroundPositionX') + ' ' + getStyle(element, 'backgroundPositionY')).replace(/left|top/gi, 0).split(' ');
+        return {
+            x: int(position[0]),
+            y: int(position[1])
+        };
+    }
+    function getStyle(element, property) {
+        if (window.getComputedStyle) {
+            return window.getComputedStyle(element, null)[property];
+        }
+        return element.currentStyle[property];
     }
     function getDefinitionName(value, strict) {
         if (value === false) {
@@ -160,7 +173,7 @@
         //| only priveleged methods may view/edit/invoke
         //|
         //|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        var $this = this, $static = $this.constructor.static, $factor = 1, $requestID = null, $vars = {};
+        var $this = this, $static = $this.constructor.static, $bgPoint = getBackgroundPositionFrom(element), $factor = 1, $requestID = null, $vars = {};
         //|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         //|
         //| Public properties - Anyone may read/write
@@ -219,6 +232,7 @@
         $this.pause = function () {
             clearAnimation($requestID);
             $requestID = null;
+            $this.running = false;
         };
         $this.togglePause = function () {
             $this[$requestID ? 'pause' : 'play']();
@@ -259,11 +273,13 @@
             $this.gotoAndStop($this.currentFrame + int(amount));
         };
         $this.loopBetween = function (from, to, yoyo, vars) {
+            from = bound(from, 1, $this.totalFrames);
+            to = bound(to, 0, $this.totalFrames);
             $this.gotoAndStop(from);
             $this.running = true;
             $this.looping = true;
             $this.yoyo = bool(yoyo);
-            $this.targetNextFrame = uint(from);
+            $this.targetNextFrame = from;
             if (to === 0) {
                 to = $this.totalFrames;
             }
@@ -317,8 +333,8 @@
             $this.currentFrame = mod(frame, 1, $this.totalFrames);
             $this.row = $this.timeline[$this.currentFrame - 1].row;
             $this.column = $this.timeline[$this.currentFrame - 1].column;
-            $this.offsetX = $this.timeline[$this.currentFrame - 1].x;
-            $this.offsetY = $this.timeline[$this.currentFrame - 1].y;
+            $this.offsetX = $this.timeline[$this.currentFrame - 1].x + $bgPoint.x;
+            $this.offsetY = $this.timeline[$this.currentFrame - 1].y + $bgPoint.y;
             $this.element.style.backgroundPosition = $this.offsetX + 'px ' + $this.offsetY + 'px';
         }
         function onUpdateFrames() {
