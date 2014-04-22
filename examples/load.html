@@ -13,17 +13,17 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 	<meta name="description" content=""/>
 	<!-- Informations -->
-	<title>AM.Sprite - play</title>
+	<title>AM.Sprite - load</title>
 	<style>
 		body {
 			background-color: #333;
 		}
-		#backButton {
+		#mushroom {
 			position: absolute;
 			margin: auto;
-			background: url("resources/back-button.png") no-repeat 0 0;
-			width: 146px;
-			height: 54px;
+			background: url("resources/mushroom.png") no-repeat 0 -10px;
+			width: 189px;
+			height: 233px;
 			top: 0;
 			right: 0;
 			bottom: 0;
@@ -37,29 +37,22 @@
 
 -->
 <body>
-	<div id="backButton">
-	</div><!--/backButton-->
+	<div id="mushroom">
+	</div><!--/mushroom-->
 
 	<!-- libraries - scripts at the bottom for fast page loading -->
 	<script src="../dist/am.min.js"></script>
 	<script>
-		var backButton = new AM.Sprite(document.getElementById('backButton'), {
-			totalFrames: 35,
-			columns: 6,
-			rows: 6
+		var mushroom = new AM.Sprite(document.getElementById('mushroom'), {
+			totalFrames: 14,
+			columns: 5,
+			rows: 3
 		});
-		backButton.element.onmouseover = function () {
-			backButton.gotoAndStop(2);
-            backButton.play(14);
-		};
-		backButton.element.onmouseout = function () {
-			backButton.gotoAndStop(15);
-            backButton.play(23);
-		};
-		backButton.element.onclick = function () {
-			backButton.gotoAndStop(24);
-            backButton.play(backButton.totalFrames);
-		};
+		mushroom.load({
+			onLoad: function () {
+				window.alert('mushroom is ready!');
+			}
+		})
 	</script>
 </body>
 </html>
