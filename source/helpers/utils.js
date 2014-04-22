@@ -130,3 +130,7 @@ function uint(value) {
 function int(value) {
 	return 0 | window.parseInt(value, 10);
 }
+
+function checkElement(element) {
+	return element;
+}
