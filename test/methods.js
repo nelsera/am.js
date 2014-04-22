@@ -1,6 +1,8 @@
 'use strict';
 
-var expect = chai.expect;
+var assert = chai.assert,
+    expect = chai.expect,
+    should = chai.should();
 
 describe('AM.Sprite', function () {
     describe('constructor', function () {
