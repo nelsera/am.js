@@ -91,12 +91,12 @@ AM.Sprite = function (element, options) {
         $this.running = false;
     };
 
-    $this.playToBeginAndStop = function () {
-        $this.play(0);
+    $this.playToBeginAndStop = function (vars) {
+        $this.play(0, vars);
     };
 
-    $this.playToEndAndStop = function () {
-        $this.play($this.totalFrames);
+    $this.playToEndAndStop = function (vars) {
+        $this.play($this.totalFrames, vars);
     };
 
     $this.gotoRandomFrame = function () {

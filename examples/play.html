@@ -13,17 +13,17 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 	<meta name="description" content=""/>
 	<!-- Informations -->
-	<title>AM.Sprite - loopBetween</title>
+	<title>AM.Sprite - play</title>
 	<style>
 		body {
 			background-color: #333;
 		}
-		#mushroom {
+		#backButton {
 			position: absolute;
 			margin: auto;
-			background: url("resources/mushroom-order.png") no-repeat 0 -10px;
-			width: 189px;
-			height: 233px;
+			background: url("resources/back-button.png") no-repeat 0 0;
+			width: 146px;
+			height: 54px;
 			top: 0;
 			right: 0;
 			bottom: 0;
@@ -37,25 +37,29 @@
 
 -->
 <body>
-	<div id="mushroom">
-	</div><!--/mushroom-->
+	<div id="backButton">
+	</div><!--/backButton-->
 
 	<!-- libraries - scripts at the bottom for fast page loading -->
 	<script src="../dist/am.min.js"></script>
 	<script>
-		var mushroom = new AM.Sprite(document.getElementById('mushroom'), {
-			totalFrames: 14,
-			columns: 5,
-			rows: 3
+		var backButton = new AM.Sprite(document.getElementById('backButton'), {
+			totalFrames: 35,
+			columns: 6,
+			rows: 6
 		});
-		mushroom.element.onclick = function () {
-			if (mushroom.running) {
-				mushroom.pause();
-			} else {
-				mushroom.loopBetween(mushroom.currentFrame, 0, true);
-			}
+		backButton.element.onmouseover = function () {
+			backButton.gotoAndStop(2);
+            backButton.play(14);
 		};
-		mushroom.loopBetween(1, 7, true);
+		backButton.element.onmouseout = function () {
+			backButton.gotoAndStop(15);
+            backButton.play(23);
+		};
+		backButton.element.onclick = function () {
+			backButton.gotoAndStop(24);
+            backButton.play(backButton.totalFrames);
+		};
 	</script>
 </body>
 </html>
