@@ -78,12 +78,16 @@
         }
         return positions;
     }
-    function getBackgroundPositionFrom(element) {
+    function getBackgroundOffsetFrom(element) {
         var position = (getStyle(element, 'backgroundPosition') || getStyle(element, 'backgroundPositionX') + ' ' + getStyle(element, 'backgroundPositionY')).replace(/left|top/gi, 0).split(' ');
         return {
             x: int(position[0]),
             y: int(position[1])
         };
+    }
+    function getBackgroundImageFrom(element) {
+        var url = getStyle(element, 'backgroundImage') || '';
+        return url.replace(/url\(|\)|"|'/g, '');
     }
     function getStyle(element, property) {
         if (window.getComputedStyle) {
@@ -173,7 +177,7 @@
         //| only priveleged methods may view/edit/invoke
         //|
         //|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        var $this = this, $static = $this.constructor.static, $bgPoint = getBackgroundPositionFrom(element), $factor = 1, $requestID = null, $vars = {};
+        var $this = this, $static = $this.constructor.static, $bgPoint = getBackgroundOffsetFrom(element), $bgUrl = getBackgroundImageFrom(element), $factor = 1, $requestID = null, $vars = {};
         //|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         //|
         //| Public properties - Anyone may read/write
@@ -182,6 +186,12 @@
         $this.id = $static.instances++;
         $this.name = 'AM[Sprite_' + $this.id + ']';
         $this.element = element;
+        $this.image = {
+            url: $bgUrl,
+            x: $bgPoint.x,
+            y: $bgPoint.y,
+            object: new Image()
+        };
         $this.options = merge($static.defaults, options);
         $this.fps = num($this.options.fps);
         $this.totalFrames = Math.max(1, $this.options.totalFrames - 1);
@@ -210,6 +220,17 @@
         //| may not be changed; may be replaced with public flavors
         //|
         //|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        $this.load = function (vars) {
+            vars = typeOf(vars) === 'object' ? vars : {};
+            $this.image.object.src = $this.image.url;
+            $this.image.object.onload = function () {
+                $this.image.width = $this.image.object.width;
+                $this.image.height = $this.image.object.height;
+                if (typeof vars.onLoad === 'function') {
+                    vars.onLoad.apply($this, vars.onLoadParams);
+                }
+            };
+        };
         $this.play = function (frame, vars) {
             $this.pause();
             if (typeOf(frame, true) === 'uint') {
@@ -333,8 +354,8 @@
             $this.currentFrame = mod(frame, 1, $this.totalFrames);
             $this.row = $this.timeline[$this.currentFrame - 1].row;
             $this.column = $this.timeline[$this.currentFrame - 1].column;
-            $this.offsetX = $this.timeline[$this.currentFrame - 1].x + $bgPoint.x;
-            $this.offsetY = $this.timeline[$this.currentFrame - 1].y + $bgPoint.y;
+            $this.offsetX = $this.timeline[$this.currentFrame - 1].x + $this.image.x;
+            $this.offsetY = $this.timeline[$this.currentFrame - 1].y + $this.image.y;
             $this.element.style.backgroundPosition = $this.offsetX + 'px ' + $this.offsetY + 'px';
         }
         function onUpdateFrames() {

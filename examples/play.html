@@ -41,13 +41,16 @@
 	</div><!--/backButton-->
 
 	<!-- libraries - scripts at the bottom for fast page loading -->
-	<script src="../dist/am.min.js"></script>
+	<script src="../dist/am.js"></script>
 	<script>
 		var backButton = new AM.Sprite(document.getElementById('backButton'), {
 			totalFrames: 35,
 			columns: 6,
 			rows: 6
 		});
+		backButton.load({ onLoad: function () {
+			alert('ae');
+		}});
 		backButton.element.onmouseover = function () {
 			backButton.gotoAndStop(2);
             backButton.play(14);

@@ -28,12 +28,17 @@ function gridLayout(length, columns, width, height, marginX, marginY, vertical) 
 	return positions;
 }
 
-function getBackgroundPositionFrom(element) {
+function getBackgroundOffsetFrom(element) {
 	var position = (
 		getStyle(element, 'backgroundPosition') ||
 		getStyle(element, 'backgroundPositionX') + ' ' + getStyle(element, 'backgroundPositionY')
 	).replace(/left|top/gi, 0).split(' ');
     return { x: int(position[0]), y: int(position[1]) };
+}
+
+function getBackgroundImageFrom(element) {
+	var url = (getStyle(element, 'backgroundImage') || '');
+	return url.replace(/url\(|\)|"|'/g, '');
 }
 
 function getStyle(element, property) {
