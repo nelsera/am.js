@@ -4,7 +4,10 @@
   "main": "dist/am.js",
   "license": "MIT",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "chai": "~1.9.1",
+    "mocha": "~1.18.2"
+  },
   "devDependencies": {},
   "keywords": [
     "am",
