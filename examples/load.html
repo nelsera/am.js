@@ -51,6 +51,36 @@
 		mushroom.load({
 			onLoad: function () {
 				window.alert('mushroom is ready!');
+				window.console.log([
+					'AM.Sprite:',
+					'\t- id:' + mushroom.id,
+					'\t- name:' + mushroom.name,
+					'\t- element:' + mushroom.element,
+					'\t- image.url:' + mushroom.image.url,
+					'\t- image.x:' + mushroom.image.x,
+					'\t- image.y:' + mushroom.image.y,
+					'\t- image.object:' + mushroom.image.object,
+					'\t- fps:' + mushroom.fps,
+					'\t- totalFrames:' + mushroom.totalFrames,
+					'\t- currentFrame:' + mushroom.currentFrame,
+					'\t- vertical:' + mushroom.vertical,
+					'\t- tileW:' + mushroom.tileW,
+					'\t- tileH:' + mushroom.tileH,
+					'\t- columns:' + mushroom.columns,
+					'\t- rows:' + mushroom.rows,
+					'\t- column:' + mushroom.column,
+					'\t- row:' + mushroom.row,
+					'\t- lastFrame:' + mushroom.lastFrame,
+					'\t- targetNextFrame:' + mushroom.targetNextFrame,
+					'\t- targetFrame:' + mushroom.targetFrame,
+					'\t- offsetX:' + mushroom.offsetX,
+					'\t- offsetY:' + mushroom.offsetY,
+					'\t- reverse:' + mushroom.reverse,
+					'\t- running:' + mushroom.running,
+					'\t- looping:' + mushroom.looping,
+					'\t- yoyo:' + mushroom.yoyo,
+					'\t- timeline:' + mushroom.timeline
+				].join('\n'));
 			}
 		})
 	</script>
