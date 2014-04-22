@@ -54,6 +54,6 @@
   "scripts": {
     "build": "npm install && gulp",
     "start": "gulp watch",
-    "test": "gulp"
+    "test": "gulp test"
   }
 }
