@@ -58,9 +58,6 @@ AM.Sprite = function (element, options) {
     //|
     //|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    $this.init = function () {
-    };
-
     $this.load = function (vars) {
     	vars = typeOf(vars) === 'object' ? vars : {};
 		$this.image.object.src = $this.image.url;
