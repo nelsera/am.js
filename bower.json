@@ -8,7 +8,9 @@
     "chai": "~1.9.1",
     "mocha": "~1.18.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "cheerio": "~0.15.0"
+  },
   "keywords": [
     "am",
     "javascript",
