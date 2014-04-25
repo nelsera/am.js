@@ -52,14 +52,6 @@
             };
         }
     }());
-    function merge(defaults, options) {
-        var option, output = {};
-        options = typeOf(options) === 'object' ? options : {};
-        for (option in defaults) {
-            output[option] = (options.hasOwnProperty(option) ? options : defaults)[option];
-        }
-        return output;
-    }
     function gridLayout(length, columns, width, height, marginX, marginY, vertical) {
         var id, row, column, offsetX, offsetY, positions = [];
         for (id = 0; id < length; id++) {
@@ -317,6 +309,26 @@
         //| only priveleged methods may view/edit/invoke
         //|
         //|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        function merge(defaults, options) {
+            var option, output = {};
+            options = typeOf(options) === 'object' ? options : {};
+            for (option in defaults) {
+                var dataset = data(option);
+                if (options.hasOwnProperty(option) || dataset) {
+                    output[option] = options[option] || dataset;
+                } else {
+                    output[option] = defaults[option];
+                }
+                window.console.log('option', option, output[option]);
+            }
+            return output;
+        }
+        function data(key, value) {
+            if (!typeOf(value)) {
+                return element.getAttribute('data-' + key);
+            }
+            element.setAttribute('data-' + key, value);
+        }
         function setAnimation(callback, element, fps) {
             var params, id;
             if (typeOf(callback) !== 'function') {

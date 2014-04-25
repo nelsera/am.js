@@ -11,9 +11,8 @@ AM.Sprite = function (element, options) {
 
     var $this = this,
     	$static = $this.constructor.static,
-        $element = checkElement(element),
-    	$bgPoint = getBackgroundOffsetFrom($element),
-    	$bgUrl = getBackgroundImageFrom($element),
+    	$bgPoint = getBackgroundOffsetFrom(element),
+    	$bgUrl = getBackgroundImageFrom(element),
     	$factor = 1,
     	$requestID = null,
     	$vars = {};
@@ -26,15 +25,15 @@ AM.Sprite = function (element, options) {
 
     $this.id = ($static.instances++);
     $this.name = 'AM[Sprite_' + $this.id + ']';
-    $this.element = $element;
+    $this.element = element;
     $this.image = { url: $bgUrl, x: $bgPoint.x, y: $bgPoint.y, object: new Image() };
     $this.options = merge($static.defaults, options);
     $this.fps = num($this.options.fps);
     $this.totalFrames = Math.max(1, $this.options.totalFrames - 1);
     $this.currentFrame = bound($this.options.currentFrame, 1, $this.totalFrames);
     $this.vertical = bool($this.options.vertical);
-    $this.tileW = (num($this.options.tileW) || $element.clientWidth);
-    $this.tileH = (num($this.options.tileH) || $element.clientHeight);
+    $this.tileW = (num($this.options.tileW) || element.clientWidth);
+    $this.tileH = (num($this.options.tileH) || element.clientHeight);
     $this.columns = uint($this.options.columns);
     $this.rows = uint($this.options.rows);
     $this.column = num($this.currentFrame % $this.rows);
@@ -170,6 +169,28 @@ AM.Sprite = function (element, options) {
     //| only priveleged methods may view/edit/invoke
     //|
     //|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    function merge(defaults, options) {
+		var option, output = {};
+		options = typeOf(options) === 'object' ? options : {};
+		for (option in defaults) {
+			var dataset = data(option);
+			if (options.hasOwnProperty(option) || dataset) {
+				output[option] = options[option] || dataset;
+			} else {
+				output[option] = defaults[option];
+			}
+			window.console.log('option', option, output[option]);
+		}
+		return output;
+	}
+
+	function data(key, value) {
+		if (!typeOf(value)) {
+			return element.getAttribute('data-' + key);
+		}
+		element.setAttribute('data-' + key, value);
+	}
 
     function setAnimation(callback, element, fps) {
         var params, id;

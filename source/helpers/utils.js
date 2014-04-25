@@ -1,14 +1,5 @@
 'use strict';
 
-function merge(defaults, options) {
-	var option, output = {};
-	options = typeOf(options) === 'object' ? options : {};
-	for (option in defaults) {
-		output[option] = (options.hasOwnProperty(option) ? options : defaults)[option];
-	}
-	return output;
-}
-
 function gridLayout(length, columns, width, height, marginX, marginY, vertical) {
 	var id, row, column, offsetX, offsetY, positions = [];
 	for (id = 0; id < length; id++) {
@@ -129,30 +120,4 @@ function uint(value) {
 
 function int(value) {
 	return 0 | window.parseInt(value, 10);
-}
-
-function createElement(nodeName, name) {
-	var node;
-	try {
-		node = createElementMSIE(nodeName, name);
-		createElement = createElementMSIE;
-	} catch (error) {
-		node = createElementStandard(nodeName, name);
-		createElement = createElementStandard;
-	}
-	return node;
-}
-
-function createElementStandard(nodeName, name) {
-	var node = document.createElement(nodeName);
-	node.name = name;
-	return node;
-}
-
-function createElementMSIE(nodeName, name) {
-	return document.createElement('<' + nodeName + ' name="' + name + '">');
-}
-
-function checkElement(element) {
-	return element || createElement('div');
 }
