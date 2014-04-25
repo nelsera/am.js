@@ -1,9 +1,9 @@
 'use strict';
 
 AM.Sprite = function (element, options) {
-
+	
 	//|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//|
+	//| 
 	//| Private properties
 	//| only priveleged methods may view/edit/invoke
 	//|
