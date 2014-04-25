@@ -319,7 +319,6 @@
                 } else {
                     output[option] = defaults[option];
                 }
-                window.console.log('option', option, output[option]);
             }
             return output;
         }

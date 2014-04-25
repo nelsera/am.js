@@ -1,9 +1,9 @@
 'use strict';
 
 AM.Sprite = function (element, options) {
-	
+
 	//|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//| 
+	//|
 	//| Private properties
 	//| only priveleged methods may view/edit/invoke
 	//|
@@ -180,7 +180,6 @@ AM.Sprite = function (element, options) {
 			} else {
 				output[option] = defaults[option];
 			}
-			window.console.log('option', option, output[option]);
 		}
 		return output;
 	}
