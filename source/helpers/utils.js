@@ -33,7 +33,7 @@ function getBackgroundOffsetFrom(element) {
 		getStyle(element, 'backgroundPosition') ||
 		getStyle(element, 'backgroundPositionX') + ' ' + getStyle(element, 'backgroundPositionY')
 	).replace(/left|top/gi, 0).split(' ');
-    return { x: int(position[0]), y: int(position[1]) };
+	return { x: int(position[0]), y: int(position[1]) };
 }
 
 function getBackgroundImageFrom(element) {
@@ -131,6 +131,28 @@ function int(value) {
 	return 0 | window.parseInt(value, 10);
 }
 
+function createElement(nodeName, name) {
+	var node;
+	try {
+		node = createElementMSIE(nodeName, name);
+		createElement = createElementMSIE;
+	} catch (error) {
+		node = createElementStandard(nodeName, name);
+		createElement = createElementStandard;
+	}
+	return node;
+}
+
+function createElementStandard(nodeName, name) {
+	var node = document.createElement(nodeName);
+	node.name = name;
+	return node;
+}
+
+function createElementMSIE(nodeName, name) {
+	return document.createElement('<' + nodeName + ' name="' + name + '">');
+}
+
 function checkElement(element) {
-	return element;
+	return element || createElement('div');
 }
